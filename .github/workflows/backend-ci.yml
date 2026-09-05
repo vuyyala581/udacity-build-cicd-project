@@ -30,7 +30,7 @@ jobs:
 
       - name: Run lint
         working-directory: starter/backend
-        run: python -m flake8
+        run: FAIL_LINT=true python -m flake8
 
   test:
     runs-on: ubuntu-latest
