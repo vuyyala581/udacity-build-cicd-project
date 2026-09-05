@@ -30,7 +30,7 @@ jobs:
 
       - name: Run lint
         working-directory: starter/frontend
-        run: FAIL_LINT=true npm run lint
+        run: npm run lint
 
   test:
     runs-on: ubuntu-latest
