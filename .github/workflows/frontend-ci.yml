@@ -52,7 +52,7 @@ jobs:
 
       - name: Run tests
         working-directory: starter/frontend
-        run: npm test -- --watchAll=false
+        run: FAIL_TEST=true npm test -- --watchAll=false
 
   build:
     runs-on: ubuntu-latest
