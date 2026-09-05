@@ -52,7 +52,7 @@ jobs:
 
       - name: Run tests
         working-directory: starter/backend
-        run: pytest -v
+        run: FAIL_TEST=true pytest -v
 
   build:
     runs-on: ubuntu-latest
