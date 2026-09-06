@@ -9,6 +9,57 @@ The team's project is comprised of 2 applications.
 
 You'll find 2 folders, one named `frontend` and one named `backend`, where each application's source code is maintained. Your job is to use the team's [existing documentation](#frontend-development-notes) and create CI/CD pipelines to meet the teams' needs.
 
+## Deployment & Submission Evidence
+
+### GitHub Repository
+
+https://github.com/vuyyala581/udacity-build-cicd-project
+
+### Frontend – Movie List
+
+http://a9c75bd4694ea440eae68e0509d2edd5-1148868800.us-east-1.elb.amazonaws.com
+
+The frontend is deployed on Amazon EKS and successfully displays:
+
+* Top Gun: Maverick
+* Sonic the Hedgehog
+* A Quiet Place
+
+### Backend – Movies API
+
+http://a9ff433ee16764f31833b61274590336-543180333.us-east-1.elb.amazonaws.com/movies
+
+The backend /movies endpoint successfully returns the movie data.
+
+### CI/CD Workflows
+
+The project contains four GitHub Actions workflows:
+
+* Frontend CI — Successful
+* Frontend CD — Successful
+* Backend CI — Successful
+* Backend CD — Successful
+
+### Kubernetes Deployment
+
+* Frontend — Running
+* Backend — Running
+* EKS Node — Ready
+* Frontend LoadBalancer — Active
+* Backend LoadBalancer — Active
+
+### ECR Images
+
+**Frontend**
+
+999842098006.dkr.ecr.us-east-1.amazonaws.com/frontend:efccb4821815ded3d6bcdbf4bc7a3d0727ff91aa
+
+**Backend**
+
+999842098006.dkr.ecr.us-east-1.amazonaws.com/backend:f1df0342aa69e1627f98849c139449391a0591c9
+
+## Original Project Documentation
+
 ## Deliverables
 
 ### Frontend
