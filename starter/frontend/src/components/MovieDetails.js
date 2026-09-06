@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 function MovieDetail({ movie }) {
@@ -17,4 +18,5 @@ function MovieDetail({ movie }) {
   );
 }
 
+MovieDetail.propTypes = { movie: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired };
 export default MovieDetail;
