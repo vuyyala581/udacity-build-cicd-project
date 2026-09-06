@@ -99,9 +99,38 @@ jobs:
 
       - name: Configure kubectl for EKS
         run: |
-          aws eks update-kubeconfig \
-            --region "$AWS_REGION" \
-            --name "$EKS_CLUSTER_NAME"
+          mkdir -p "$HOME/.kube"
+
+          cat > "$HOME/.kube/config" <<EOF
+          apiVersion: v1
+          kind: Config
+          clusters:
+          - name: cluster
+            cluster:
+              server: https://7694F7C01319A90A8E63DF6B8D289E9C.gr7.us-east-1.eks.amazonaws.com
+              certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUREakNDQWZhZ0F3SUJBZ0lSQU5lelBqWm9EZnVEM3lVS05CWm4rQmt3RFFZSktvWklodmNOQVFFTEJRQXcKRlRFVE1CRUdBMVVFQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpBNU1EVXdOekU1TURSYUZ3MHpNVEE1TURRdwpOekU1TURSYU1CVXhFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBCkE0SUJEd0F3Z2dFS0FvSUJBUURRMUhFcXdwMisveSs3NlZrWGZPS1hYVngyTmY1N3IxSTkrV0xjUXo5Tkl2ME8KY241MktQV1Uyb3lNblV4RGF5M0JzRlpTbG5SU3NxZklENTYxWnEvUDgxLzlCN1cyRWc1enl3a1NkeGo4SSttOAozdEgwQlBuMjluMENHMkFvT0xjaDg1VHp4RU1OdnVMNk1Ed05jd0VhOFNOWmZKMDZZSXAxdVI3QUkzdmFCb08vClBIZnU0Y3RjcWRYWVkzSW0rVG5QcW5nQUNwSDMxbFo5UklTNDUwdkswTml0VmMrNjNQUW1iMWRESEpzZ3ZPc00KcHVFSkdjbERvUkpNMWRBM3NtYmJ1YjNhVkdkOGMyWTlOdzNmMEd5ZUwzQ0h2bFluVUN2OXZCb0NjaXNueExDZgpkNDVnTGtXMGJpQ0k4VzJtem1MN013UEpMTThCbFk5VlgxMzE4ZWZEQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCCi93UUVBd0lDcERBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSZzNLODBldW5uWlprZmtQS0sKcTR0bndTejdJVEFWQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQgpBUUNaMTBIZTNwOGdnb29pWGNQVlVvUjhSSysrMDMxREVZUDJ0N0VSZTFudUMwYzhWRWY5RG1VOStUTDlFa2VtCmdYV1dQUVdyTkUxL3RPWnlNT0NkUzhlREw0ZUR6MCtDT3BvSUZaRk5OV09xOUJYUmFSdkNFcTRta0tlNEp3dmsKQzBObmhQQmxRVk0vNWVPZFpiQ0pScktpYzlWcXoyeVZ4bWU3eW9SOTZXQzB4ZjZDWHpBaWt5aTBxcHNQbjI4aAozVmR4UEZsNk9HNGxPelF6SFhTaC85V3hlZ0NOZDNDTWdlSHd5YkxMVDZ4Nm5MSENmUVF1OWtueDVPcS9neXdwCm5SK1UvUWRQSkU1Um4vR3U2bFJDeHg2SmIweDBNaENuYU9DRjF1RUsrV2xPVUtxUkd4KzhyY1AvOFYwN2lLdjYKZ3BzQzVTdlFvZTZ4SG5kUmsyUXpGTVNqCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+          contexts:
+          - name: cluster
+            context:
+              cluster: cluster
+              user: voclabs
+          current-context: cluster
+          users:
+          - name: voclabs
+            user:
+              exec:
+                apiVersion: client.authentication.k8s.io/v1beta1
+                command: aws
+                args:
+                - eks
+                - get-token
+                - --region
+                - us-east-1
+                - --cluster-name
+                - cluster
+          EOF
+
+          kubectl get nodes
 
       - name: Wait for backend LoadBalancer
         id: backend
